@@ -1,0 +1,68 @@
+def load_input(file_path):
+    puzzle_grid = []
+    with open(file_path, 'r') as f:
+        for line in f:
+            line = line.rstrip("\n")
+            line_list = list(line)
+            puzzle_grid.append(line_list)
+    return puzzle_grid
+
+def search(puzzle_grid, loc_row, loc_col):
+    try:
+        left = [puzzle_grid[loc_row][loc_col + k] for k in range(4)]
+        left = ''.join(left)
+
+    except:
+        left = None
+
+    try:
+        right = [puzzle_grid[loc_row][loc_col - k] for k in range(4)]
+        right = ''.join(right)
+
+    except:
+        right = None
+
+    try:
+        up = [puzzle_grid[loc_row - k][loc_col] for k in range(4)]
+        up = ''.join(up)
+
+    except:
+        up = None
+
+    try:
+        down = [puzzle_grid.loc_row + k][loc_col] for k in range(4)]
+        down = ''.join(down)
+
+    except:
+        down = None
+
+    return sum([x == 'XMAS' for x in [up, down, left, right]])
+    
+
+def partA(file_path):
+    puzzle_grid = load_input(file_path)
+    num_row = len(puzzle_grid)
+    num_col = len(puzzle_grid[0])
+
+    matches = 0
+    
+    for row_idx in range(num_row):
+        for col_idx in range(num_col):
+            if puzzle_grid[row_idx][col_idx] == "X":
+                matches += search(puzzle_grid, row_idx, col_idx)
+
+    return matches
+            
+
+def partB(file_path):
+    pass
+
+
+if __name__ == "__main__":
+    print(f"Part A test: {partA('test_input.txt')}")
+    print(f"Part A: {partA('input.txt')}")
+
+    print(f"Part B test: {partB('test_input.txt')}")
+    print(f"Part B: {partB('input.txt')}")
+
+    
